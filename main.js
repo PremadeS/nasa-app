@@ -71,6 +71,7 @@ function update() {
     velocityY = moveSpeed;
     background.tilePositionY += 3;
   }
+
   if (this.input.keyboard.keys[65].isDown) { // A key
     velocityX = -moveSpeed;
     background.tilePositionX -= 3;
@@ -113,35 +114,18 @@ function update() {
     if (Phaser.Math.Between(0, 100) > 97) { // 2% chance to spawn a planet per frame
       spawnRandomPlanets(this);
     }
-  } else if (!isReturning) {
-    returnToCenter(this);
   }
 
   background.tilePositionX += 0.5;
 }
 
-function returnToCenter(scene) {
-  isReturning = true;
-
-  // Smoothly tween the spaceship back to the center
-  returnTween = scene.tweens.add({
-    targets : spaceship,
-    x : scene.scale.width / 2,
-    y : scene.scale.height / 2,
-    ease : 'Power2', // Easing function for smooth movement
-    duration : returnSpeed,
-    onComplete : () => {
-      isReturning = false; // Allow movement again after returning
-    }
-  });
-}
-
 function spawnRandomPlanets(scene) {
   let x, y;
   let overlap = true;
+  let limit = 0;
 
   // Keep generating a new position until there is no overlap
-  while (overlap) {
+  while (overlap && limit < 100) {
     if (Phaser.Math.Between(0, 1)) {
       x = Phaser.Math.Between(-planetSpawnDistance, config.width + planetSpawnDistance);
       y = Phaser.Math.Between(-planetSpawnDistance, 0); // Above or below screen
@@ -156,9 +140,11 @@ function spawnRandomPlanets(scene) {
     planets.children.each(planet => {
       let distance = Phaser.Math.Distance.Between(x, y, planet.x, planet.y);
       if (distance < planet.width) {
-        overlap = true; // If overlapping, regenerate position
+        overlap = true;
       }
     });
+
+    ++limit; // to avoid inifinite loop bruv..
   }
 
   // Create a new planet at a valid non-overlapping position
