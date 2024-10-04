@@ -1,13 +1,7 @@
-body, html {
+html, body {
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: black;
-}
-
-canvas {
-  display: block;
+  overflow: hidden; /* Prevent scrollbars */
+  height: 100%; /* Ensure full height */
+  background-color: #000; /* Match the canvas background color */
 }
