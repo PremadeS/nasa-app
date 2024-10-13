@@ -2,6 +2,8 @@
 
 An *interactive* spaceship game aimed at younger students to deliver information about **exoplanets** in an entertaining way *(note that this is just a base for an idea not a fully developed game **yet**)*! 
 
+You can *check* the **Demo** here: [Exoplanets-Galaxar-Web](https://exoplanets-galaxar.vercel.app/)
+
 ## To Run
 
 ```shell
